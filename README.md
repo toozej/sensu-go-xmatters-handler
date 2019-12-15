@@ -2,7 +2,7 @@
 [![Bonsai Asset Badge](https://img.shields.io/badge/CHANGEME-Download%20Me-brightgreen.svg?colorB=89C967&logo=sensu)](https://bonsai.sensu.io/assets/CHANGEME/CHANGEME) [![TravisCI Build Status](https://travis-ci.org/CHANGEME/sensu-CHANGEME.svg?branch=master)
 ](https://travis-ci.org/CHANGEME/sensu-CHANGEME)
 
-# Sensu Go CHANGEME Plugin
+# Sensu Go xMatters Plugin
 
 TODO: Table of Contents
 
@@ -72,7 +72,7 @@ or create an executable script from this source.
 From the local path of the sensu-CHANGEME repository:
 
 ```
-go build -o /usr/local/bin/sensu-CHANGEME main.go
+go build -o /usr/local/bin/sensu-xmatters-handler main.go
 ```
 
 For more information about contributing to this plugin, see https://github.com/sensu/sensu-go/blob/master/CONTRIBUTING.md
