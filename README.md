@@ -97,7 +97,7 @@ or create an executable script from this source.
 From the local path of the sensu-go-xmatters-handler repository:
 
 ```
-go build -o /usr/local/bin/sensu-xmatters-handler main.go
+go build -o /usr/local/bin/sensu-go-xmatters-handler main.go
 ```
 
 For more information about contributing to this plugin, see https://github.com/sensu/sensu-go/blob/master/CONTRIBUTING.md

@@ -123,7 +123,7 @@ func eventSubject(event *types.Event) string {
 
 // eventDescription func returns a formatted message
 func eventDescription(event *types.Event) string {
-	return fmt.Sprintf("*%s*\nServer: %s, \nCheck: %s, \n, \nCheck Output: %s, \nAnnotation Information:\n%s", formattedEventAction(event), event.Entity.Name, event.Check.Name, event.Check.Output, parseAnnotations(event))
+	return fmt.Sprintf("Server: %s, \nCheck: %s, \nStatus: %s, \nCheck Output: %s, \nAnnotation Information:\n%s", event.Entity.Name, event.Check.Name, formattedEventAction(event), event.Check.Output, parseAnnotations(event))
 }
 
 func run(cmd *cobra.Command, args []string) error {
