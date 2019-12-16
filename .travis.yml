@@ -9,27 +9,23 @@ install:
 - go get github.com/golang/dep/cmd/dep
 - dep ensure
 script:
-- gometalinter.v1 --vendor --disable-all --enable=vet --enable=ineffassign
-  --enable=goconst --tests ./...
+- gometalinter.v1 --vendor --disable-all --enable=vet --enable=ineffassign --enable=goconst
+  --tests ./...
 - go test -v -race ./...
-
 before_script:
 - echo "REPO $TRAVIS_REPO_SLUG TAG ${TRAVIS_TAG}"
-
 deploy:
-  - #goreleaser
-    provider: script
-    script: curl -sL https://git.io/goreleaser | bash
-    skip_cleanup: true
-    on:
-      tags: true
-      condition: $TRAVIS_OS_NAME = linux
-
+- provider: script
+  script: curl -sL https://git.io/goreleaser | bash
+  skip_cleanup: true
+  on:
+    tags: true
+    condition: "$TRAVIS_OS_NAME = linux"
 after_deploy:
-  - git clone https://github.com/sensu/sensu-go-bonsai-asset.git bonsai
-  - bonsai/generate-sha512sum.sh
-  - bonsai/github-release-upload.sh github_api_token=$GITHUB_TOKEN repo_slug="$TRAVIS_REPO_SLUG" tag="${TRAVIS_TAG}" filename="dist/$(cat dist/sha512_file)"
-
-#env:
-#  global:
-#  - secure: GITHUB_TOKEN_SECRET
+- git clone https://github.com/sensu/sensu-go-bonsai-asset.git bonsai
+- bonsai/generate-sha512sum.sh
+- bonsai/github-release-upload.sh github_api_token=$GITHUB_TOKEN repo_slug="$TRAVIS_REPO_SLUG"
+  tag="${TRAVIS_TAG}" filename="dist/$(cat dist/sha512_file)"
+env:
+  global:
+    secure: alP3Pcq9CImKmEoOe2WCkADeHM6+xnRhzynw2amIvzGh87RzVF34DJTvUUXBiSSprILm2J9q9kbw5KGS7ECePUCKos0tq+KulT8BVhp/zNN4avXH1n49L6gf/hwzdqJe5GoCRi0y8bnsKXQxg3GYO6Wu0vP4SS5lIpvlfZNvhmss6sx2LK11+FVPepFVXAIuAKhbx/yIj3/cEtYaL5M5/BW79YOcJZb7sPGgcQbkyq7WIcP+7bnHbVJeoUk+MpJG3ofiV/HRrGc2MOmzuCUcuKRpPhqL1kQABQev1L0zt5/Gm8qEYKGec+6akaHPXP8bHwuNeCCgP4csDhR/tq9L1bVgXi3XP3Oz0u+JMynmQ0d61zQWcsx6LeOWvboYU+p6BAT3ErwPW5SdaWEuIFOwpQadusDLY4enC1luU0Wl6+f/Wb1xTksWaNENkmGjvWKxE7TovYFsw2mbelvOhjbnfKBq+LY6WXaInZP9ikmKnApFke52aMq8xLYMVwwMoqQd5CU7lZ0G7P8lrvQxbMu5GDR3ZCAwy8nWinyqv7l54EATGfSCcsCQF3mvp7wyyiVeVvII77yMMBPKECwAnwWEzyRu6g/6eLinZu9p4g1BOSxoP7SEtXwnN0N1uxC/IkNAhbBwaGFNgSDZqjdmMGsNjk/qbMnvlaxC9FYKkSfthEA=
