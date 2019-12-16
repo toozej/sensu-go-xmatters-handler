@@ -17,15 +17,19 @@ import (
 var (
 	webhook     string
 	annotations string
+	debug       bool
 	stdin       *os.File
 )
 
-// payload struct for post in sensu
-type payload struct {
-	payload struct {
-		subject string `json:"subject"`
-		message string `json:"message"`
-	} `json:"properties"`
+// Properties struct includes the two fields (subject and message) which xMatters webhook expects to be POSTed to it in JSON
+type Properties struct {
+	Subject string `json:"subject"`
+	Message string `json:"message"`
+}
+
+// Payload struct includes Properties struct for post to xMatters webhook URL
+type Payload struct {
+	Properties `json:"properties"`
 }
 
 func main() {
@@ -54,6 +58,12 @@ func configureRootCommand() *cobra.Command {
 		"a",
 		os.Getenv("XMATTERS_ANNOTATIONS"),
 		"The xMatters handler will parse check and entity annotations with these values. Use XMATTERS_ANNOTATIONS env var with commas, like: documentation,playbook")
+
+	cmd.Flags().BoolVarP(&debug,
+		"debug",
+		"d",
+		false,
+		"Enable debug mode, which prints JSON object which would be POSTed to the xMatters webhook instead of actually POSTing it")
 
 	_ = cmd.MarkFlagRequired("webhook")
 
@@ -103,8 +113,6 @@ func parseAnnotations(event *types.Event) string {
 			}
 		}
 	}
-	output += fmt.Sprintf("Check output: %s", event.Check.Output)
-
 	return output
 }
 
@@ -115,7 +123,7 @@ func eventSubject(event *types.Event) string {
 
 // eventDescription func returns a formatted message
 func eventDescription(event *types.Event) string {
-	return fmt.Sprintf("*%s*\nServer: %s, \nCheck: %s, \nMore Information:\n%s", formattedEventAction(event), event.Entity.Name, event.Check.Name, parseAnnotations(event))
+	return fmt.Sprintf("*%s*\nServer: %s, \nCheck: %s, \n, \nCheck Output: %s, \nAnnotation Information:\n%s", formattedEventAction(event), event.Entity.Name, event.Check.Name, event.Check.Output, parseAnnotations(event))
 }
 
 func run(cmd *cobra.Command, args []string) error {
@@ -156,14 +164,23 @@ func run(cmd *cobra.Command, args []string) error {
 		return fmt.Errorf("event does not contain check")
 	}
 
-	formPost := payload{
-		properties.subject: eventSubject(event),
-		properties.message: eventDescription(event),
+	formPost := &Payload{
+		Properties: Properties{
+			Subject: eventSubject(event),
+			Message: eventDescription(event),
+		},
 	}
-	bodymarshal, err := json.Marshal(&formPost)
+	bodymarshal, err := json.Marshal(formPost)
 	if err != nil {
 		fmt.Printf("[ERROR] %s", err)
 	}
+
+	if debug == true {
+		fmt.Printf("[DEBUG] JSON output: %s\n", bodymarshal)
+		fmt.Println("[DEBUG] Not posting JSON object to xMatters webhook since we're in debug mode ")
+		os.Exit(1)
+	}
+
 	Post(webhook, bodymarshal)
 	return nil
 }
