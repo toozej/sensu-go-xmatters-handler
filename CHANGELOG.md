@@ -7,6 +7,8 @@ Versioning](http://semver.org/spec/v2.0.0.html).
 
 ## Unreleased
 
+## [0.2.0] - 2019-12-19
+
 ## [0.2] - 2019-12-16
 ### Added
 - Reorganizes "message" output sent to xMatters webhook for readability
