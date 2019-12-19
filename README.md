@@ -1,5 +1,4 @@
-
-[![Bonsai Asset Badge](https://img.shields.io/badge/sensu-go-xmatters-handler-Download%20Me-brightgreen.svg?colorB=89C967&logo=sensu)](https://bonsai.sensu.io/assets/toozej/sensu-go-xmatters-handler) [![TravisCI Build Status](https://travis-ci.org/toozej/sensu-go-xmatters-handler.svg?branch=master)
+[![Sensu Bonsai Asset](https://img.shields.io/badge/Bonsai-Download%20Me-brightgreen.svg?colorB=89C967&logo=sensu)](https://bonsai.sensu.io/assets/toozej/sensu-go-xmatters-handler) [![TravisCI Build Status](https://travis-ci.org/toozej/sensu-go-xmatters-handler.svg?branch=master)
 ](https://travis-ci.org/toozej/sensu-go-xmatters-handler)
 
 # Sensu Go xMatters Plugin
@@ -10,7 +9,6 @@ Table of Contents
 - [Usage examples](#usage-examples)
 - [Configuration](#configuration)
   - [Asset registration](#asset-registration)
-  - [Asset configuration](#asset-configuration)
   - [Resource configuration](#resource-configuration)
 - [Functionality](#functionality)
 - [Installation from source and contributing](#installation-from-source-and-contributing)
@@ -40,24 +38,9 @@ Flags:
 
 Assets are the best way to make use of this plugin. If you're not using an asset, please consider doing so! If you're using sensuctl 5.13 or later, you can use the following command to add the asset: 
 
-`sensuctl asset add toozej/sensu-go-xmatters-handler:0.1`
+`sensuctl asset add toozej/sensu-go-xmatters-handler:0.2.1`
 
 If you're using an earlier version of sensuctl, you can find the asset on the [Bonsai Asset Index](https://bonsai.sensu.io/assets/toozej/sensu-go-xmatters-handler).
-
-### Asset configuration
-
-Example asset manifest:
-
-```yml
----
-type: Asset
-api_version: core/v2
-metadata:
-  name: sensu-go-xmatters-handler
-spec:
-  url: https://CHANGEME
-  sha512: CHANGEME
-```
 
 ### Resource configuration
 

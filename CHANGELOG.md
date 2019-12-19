@@ -6,7 +6,11 @@ and this project adheres to [Semantic
 Versioning](http://semver.org/spec/v2.0.0.html).
 
 ## Unreleased
-### [0.2.1] - 2019-12-19
+
+## [0.2.1] - 2019-12-19
+### Added
+- Remove unnecessary asset-configuration section from README
+- Fixed Bonsai badge URL
 
 ## [0.2] - 2019-12-16
 ### Added
