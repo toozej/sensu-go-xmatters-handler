@@ -7,6 +7,10 @@ Versioning](http://semver.org/spec/v2.0.0.html).
 
 ## Unreleased
 
+## [1.0.0] - 2019-12-26
+### Added
+- First "official" release, confirmed working and tested on a production Sensu Go clustered deployment
+
 ## [0.2.1] - 2019-12-19
 ### Added
 - Remove unnecessary asset-configuration section from README
